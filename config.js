@@ -13,9 +13,9 @@ module.exports = {
     apiToken: required('JIRA_API_TOKEN'),
     projectKey: required('JIRA_PROJECT_KEY'),
   },
-  gemini: {
-    apiKey: required('GEMINI_API_KEY'),
-    model: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
+  groq: {
+    apiKey: required('GROQ_API_KEY'),
+    model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
   },
   github: {
     token: required('GITHUB_TOKEN'),
@@ -24,6 +24,7 @@ module.exports = {
   vercel: {
     token: required('VERCEL_TOKEN'),
     projectName: required('VERCEL_PROJECT_NAME'),
+    scope: process.env.VERCEL_SCOPE || '',
   },
   email: {
     from: required('EMAIL_FROM'),

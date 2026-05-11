@@ -13,11 +13,15 @@ const client = axios.create({
 });
 
 async function getReadyStories() {
-  const jql = `project = "${cfg.projectKey}" AND labels = "ai-ready" AND status = "To Do" AND summary ~ "[AI-PIPELINE]"`;
-  const res = await client.get('/rest/api/3/search', {
-    params: { jql, fields: 'summary,status,labels,attachment', maxResults: 10 },
+  const jql = `project = "${cfg.projectKey}" AND labels = "ai-ready" AND status = "To Do"`;
+  const res = await client.post('/rest/api/3/search/jql', {
+    jql,
+    fields: ['summary', 'status', 'labels', 'attachment'],
+    maxResults: 10,
   });
-  return res.data.issues || [];
+  // filter by [AI-PIPELINE] prefix in code to avoid JQL bracket issues
+  const issues = res.data.issues || [];
+  return issues.filter(i => i.fields.summary.includes('[AI-PIPELINE]'));
 }
 
 async function getRequirementsContent(issueKey) {
@@ -42,8 +46,7 @@ async function transitionIssue(issueKey, transitionName) {
   let t = transitions.find(x => x.name.toLowerCase() === transitionName.toLowerCase());
   if (!t) t = transitions.find(x => x.name.toLowerCase().includes(transitionName.toLowerCase()));
   if (!t) {
-    console.warn(`  ⚠ Transition "${transitionName}" not found. Available: ${transitions.map(x => x.name).join(', ')}`);
-    return;
+    throw new Error(`Transition "${transitionName}" not found. Available: ${transitions.map(x => x.name).join(', ')}`);
   }
 
   await client.post(`/rest/api/3/issue/${issueKey}/transitions`, {

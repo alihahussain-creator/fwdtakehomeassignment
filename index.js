@@ -99,16 +99,10 @@ async function runPipeline() {
           `✅ Pipeline completed successfully!\n\nDeployment: ${deployUrl}\nPR: ${prUrl}\nUnit tests: ${testsPassed ? 'PASS' : 'FAIL'}\n\nAll QA acceptance criteria passed.`
         );
       } else {
-        const fallbackTransitions = ['Bug Reported', 'In Review', 'Done'];
-        let transitioned = false;
+        const fallbackTransitions = ['In Review', 'Done'];
         for (const t of fallbackTransitions) {
-          try {
-            await jira.transitionIssue(issueKey, t);
-            transitioned = true;
-            break;
-          } catch {}
+          try { await jira.transitionIssue(issueKey, t); break; } catch {}
         }
-        if (!transitioned) console.warn('  ⚠ Could not transition Jira story to a terminal state');
 
         await jira.addComment(
           issueKey,
@@ -130,7 +124,7 @@ async function runPipeline() {
         );
       } catch {}
 
-      const fallbackTransitions = ['Bug Reported', 'In Review', 'Done'];
+      const fallbackTransitions = ['In Review', 'Done'];
       for (const t of fallbackTransitions) {
         try { await jira.transitionIssue(issueKey, t); break; } catch {}
       }
