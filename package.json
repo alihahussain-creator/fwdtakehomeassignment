@@ -1,0 +1,22 @@
+{
+  "name": "zero-human-touch-pipeline",
+  "version": "1.0.0",
+  "description": "Fully automated end-to-end software delivery pipeline",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "axios": "^1.7.0",
+    "dotenv": "^16.4.0",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.0",
+    "playwright": "^1.50.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
