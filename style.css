@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+#todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+#todo-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#todo-list li:last-child {
+    border-bottom: none;
+}
+
+#todo-list li input[type='checkbox'] {
+    margin-right: 10px;
+}
+
+#todo-list li button {
+    float: right;
+}
+
+#new-todo {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+}
+
+#add-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#add-button:hover {
+    background-color: #3e8e41;
+}
+
+#remaining-count {
+    font-size: 18px;
+}
